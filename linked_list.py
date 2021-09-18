@@ -7,7 +7,7 @@ class Node:
 class LinkedList:
     def __init__(self, node):
         self.head = node
-    
+
     def visualize(self):
         curr = self.head
         print(curr.val)
@@ -36,22 +36,23 @@ class LinkedList:
     def getHead(self):
         curr = self.head
         return curr.val
-    
+
     def getTail(self):
         curr = self.head
         while curr.next:
             curr = curr.next
         return curr.val
-    
+
+
 if __name__ == "__main__":
-	x = Node(10);
-	llist = LinkedList(x)
-	llist.addNode(20)
-	llist.addNode(30)
-	llist.addNode(40)
-	llist.visualize()
-	print(llist.getHead());
-	print(llist.getTail());
-	llist.removeTail();
-	llist.removeNode(20);
-	llist.visualize()
+    x = Node(10)
+    llist = LinkedList(x)
+    llist.addNode(20)
+    llist.addNode(30)
+    llist.addNode(40)
+    llist.visualize()
+    print(llist.getHead())
+    print(llist.getTail())
+    llist.removeTail()
+    llist.removeNode(20)
+    llist.visualize()
