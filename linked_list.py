@@ -7,7 +7,7 @@ class Node:
 class LinkedList:
     def __init__(self, node):
         self.head = node
-    
+
     def visualize(self):
         curr = self.head
         print(curr.val)
