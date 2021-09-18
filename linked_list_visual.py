@@ -2,118 +2,66 @@ import curses
 import math
 # draw the circle
 
+
+def visualize(self):
+
+    curr = self.head
+    print(curr.val)
+    while curr.next:
+        print('->' + str(curr.next.val))
+        curr = curr.next
+
+    y_pos = 5
+    y, x = self.screen.getmaxyx()
+
+    box1 = self.screen.subwin(4, 20, y_pos, int(x/2))
+
+    while cur:
+        print(x)
+
+    self.screen.addstr(y_pos + 2, int(x/2) + 10, str(node))
+    box1.border(0)
+    box1.box()
+    y_pos += 4
+
+    self.screen.refresh()
+
+
 screen = curses.initscr()
 
 curses.noecho()  # prevents user input from being echoed
 
-curses.cbreak()
-
-# Update the buffer, adding text at different locations
-# screen.addstr(0, 0, "This string gets printed at position (0, 0)")
-# screen.addstr(3, 1, "Try Russian text: Привет")  # Python 3 required for unicode
-# screen.addstr(4, 4, "X")
-# screen.addch(5, 5, "Y")
-
-# screen.addch(0, 0, "X")
-# screen.addch(0, 1, "X")
-# screen.addch(0, 2, "X")
-
-# screen.addch(0, 3, "X")
-
-# screen.addch(0, 4, "X")
-# screen.addch(0, 5, "X")
-# screen.addch(0, 6, "X")
-# screen.addch(0, 7, "X")
-# screen.addch(0, 8, "X")
-
-# screen.addch(0, 0, "X")
-# screen.addch(1, 0, "X")
-# screen.addch(2, 0, "X")
-
-# screen.addch(3, 0, "X")
-
-# screen.addch(4, 0, "X")
-# screen.addch(5, 0, "X")
-# screen.addch(6, 0, "X")
-# screen.addch(7, 0, "X")
-# screen.addch(8, 0, "X")
-
-# screen.addch(0, 0, "-")
-# screen.addch(0, 1, "-")
-# screen.addch(0, 2, "-")
-
-# screen.addch(0, 3, "X")
-
-# screen.addch(0, 4, "X")
-# screen.addch(0, 5, "X")
-# screen.addch(0, 6, "X")
-# screen.addch(0, 7, "X")
-# screen.addch(0, 8, "X")
-
-# screen.addch(0, 0, "X")
-# screen.addch(1, 0, "X")
-# screen.addch(2, 0, "X")
-
-# screen.addch(3, 0, "X")
-
-# screen.addch(4, 0, "X")
-# screen.addch(5, 0, "X")
-# screen.addch(6, 0, "X")
-# screen.addch(7, 0, "X")
-# screen.addch(8, 0, "X")
-
-
-def draw_piece(screen, x_center, y_center, radius):
-
-    screen.addstr(y_center + radius, x_center + radius, '*')
-    screen.addstr(y_center + radius, x_center - radius, '*')
-    screen.addstr(y_center - radius, x_center + radius, '*')
-    screen.addstr(y_center - radius, x_center - radius, '*')
-    screen.addstr(y_center + radius, x_center + radius, '*')
-    screen.addstr(y_center + radius, x_center - radius, '*')
-    screen.addstr(y_center - radius, x_center + radius, '*')
-    screen.addstr(y_center - radius, x_center - radius, '*')
-
-    x = 0
-    y = radius
-    d = 3 - 2 * radius
-    while y >= x:
-        x += 1
-        if d > 0:
-            y -= 1
-            d += 4 * (x - y) + 10
-        else:
-            d += 4 * x + 6
-        draw_piece(screen, x, y, radius)
-
-
 # Changes go in to the screen buffer and only get
 # displayed after calling `refresh()` to update
+# print(screen.getmaxyx())
 
-# draw_piece(screen, 10, 10, 5)
-def linked_list() {
+# y, x = screen.getmaxyx()
+
+# box1 = curses.newpad(y - 1, x - 1)
+# box1.border(0)
+# box2 = curses.newwin(4, 20, 5, int(x/2))
+# box2.box()
+# box3 = curses.newwin(4, 20, 8, int(x/2))
+# box3.box()
+
+
+def linked_list():
 
     a, b = 10, 10
-    r = 8
+    r = 3
     for angle in range(0, 360, 5):
-        x = r * math.sin(math.radians(angle)) + a
+        x = r * 2 * math.sin(math.radians(angle)) + a
         y = r * math.cos(math.radians(angle)) + b
         screen.addstr(int(round(y)), int(round(x)), '*')
-
-    screen.addstr(r+b+5, r+a+5, '-')
-    screen.addstr(int(round(y)), int(round(x)), '*')
-}
+    screen.addstr(int(math.floor((r + b)*.5+4)),
+                  int(round(r + a + 5)), "»»------►")
 
 
-def arrow() {
-    # screen.addstr(int(round(y)), int(round(x)), '*')
-    # screen.addstr(int(round(y)), int(round(x)), '*')
-}
-
+linked_list()
 
 screen.refresh()
 
-curses.napms(10000)
+curses.napms(5000)
 curses.endwin()
 print("hello")
 
@@ -132,3 +80,31 @@ print("hello")
 
 #     # Get resulting contents
 #     message = box.gather()
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 11)), '\\')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 12)), '\\')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 13)), '\\')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 11)), '/')
+# # screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 12)), '/')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 13)), '/')
+# arrow
+# screen.addstr(, int(round(x)), '-')
+# screen.addstr(int(round(y)), int(round(x)), '-')
+
+# screen.addstr(r+b+5, r+a+5, '-')
+# screen.addstr(int(round(y)), int(round(x)), '*')
+
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 3)), '-')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 6)), '-')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 7)), '-')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 8)), '-')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 9)), '-')
+# screen.addstr(int(math.floor((r + b)*.5)), int(round(r + a + 10)), '-')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 5)), '-')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 6)), '-')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 7)), '-')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 8)), '-')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 9)), '-')
+# screen.addstr(int(math.floor((r + b)*.5+1)), int(round(r + a + 10)), '-')
+
+# screen.addstr(int(math.floor((r + b)*.5)),
+#               int(round(r + a + 5)), '              .')

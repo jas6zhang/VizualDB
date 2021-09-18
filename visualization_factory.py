@@ -16,8 +16,13 @@ def visualization_factory(ds):
 def check_type(ds):
     if isinstance(ds, list):
         return Vector(ds)
-    elif isinstance(ds, Node):
-        return LinkedList(ds)
     elif isinstance(ds, deque):
         return DoubleEndedQueue(SCREEN, ds)
+
+    elif hasattr(ds, 'next') and hasattr(ds, 'val'):
+        return LinkedList(ds)
+
     return
+
+    # elif isinstance(ds, Array):
+    #     return Array(ds)
