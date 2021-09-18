@@ -100,8 +100,8 @@ for angle in range(0, 360, 5):
 
 
 def arrow() {
-    screen.addstr(int(round(y)), int(round(x)), '*')
-    screen.addstr(int(round(y)), int(round(x)), '*')
+    # screen.addstr(int(round(y)), int(round(x)), '*')
+    # screen.addstr(int(round(y)), int(round(x)), '*')
 }
 
 
