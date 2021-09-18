@@ -17,9 +17,17 @@ print_green = lambda x: cprint(x, 'green')
 
 def print_trace(co, frame, source):
     SCREEN.clear()
-    SCREEN.addstr(0, 0, co.co_name)
-    SCREEN.addstr(1, 0, "Line #: " + str(frame.f_lineno))
-    SCREEN.addstr(2, 0, "Locals: " + str(frame.f_locals))
+    SCREEN.addstr(0, 0, "Locals: " + str(frame.f_locals))
+    curr = 2
+    #curr_line_no = frame.f_lineno
+    curr_line_no = co.co_firstlineno
+    for line in source:
+        SCREEN.addstr(curr, 0, str(curr_line_no))
+        SCREEN.addstr(curr, 4, line)
+        if curr_line_no == frame.f_lineno:
+            SCREEN.addstr(curr, 4 + len(line) + 1, "<--")
+        curr += 1
+        curr_line_no += 1
     SCREEN.refresh()
 
     trees = []

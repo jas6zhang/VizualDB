@@ -39,3 +39,4 @@ if __name__ == "__main__":
     cool.left.left = TreeNode(4)
     cool.left.right = TreeNode(5)
     debug(bin_tree, (cool, 3))
+    #debug(sample, (2, 5))
