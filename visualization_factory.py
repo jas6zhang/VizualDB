@@ -1,5 +1,3 @@
-from collections import deque
-import curses
 
 from vector import Vector
 from linked_list import Node, LinkedList

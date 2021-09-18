@@ -4,6 +4,13 @@ import curses
 from debugger import debug
 
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class Node:
     def __init__(self, val):
         self.val = val
@@ -19,6 +26,14 @@ def sample(a, b):
     for i in range(b):
         q.append(a)
     return q
+
+
+def bin_tree(root, n):
+    curr = root.right
+    for i in range(0, n, 2):
+        curr.right = TreeNode(100 + i)
+        curr.left = TreeNode(99 + i)
+        curr = curr.right
 
 
 def sample1(a, b):
@@ -57,4 +72,10 @@ if __name__ == "__main__":
     Node1.next = Node2
     Node2.next = Node3
 
-    debug(sample2, (Node1, 2))
+    # debug(sample2, (Node1, 2))
+    cool = TreeNode(1)
+    cool.left = TreeNode(2)
+    cool.right = TreeNode(3)
+    cool.left.left = TreeNode(4)
+    cool.left.right = TreeNode(5)
+    debug(bin_tree, (cool, 3))
