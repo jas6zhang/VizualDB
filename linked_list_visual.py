@@ -91,12 +91,18 @@ def draw_piece(screen, x_center, y_center, radius):
 # displayed after calling `refresh()` to update
 
 # draw_piece(screen, 10, 10, 5)
-a, b = 10, 10
-r = 8
-for angle in range(0, 360, 5):
-    x = r * math.sin(math.radians(angle)) + a
-    y = r * math.cos(math.radians(angle)) + b
+def linked_list() {
+
+    a, b = 10, 10
+    r = 8
+    for angle in range(0, 360, 5):
+        x = r * math.sin(math.radians(angle)) + a
+        y = r * math.cos(math.radians(angle)) + b
+        screen.addstr(int(round(y)), int(round(x)), '*')
+
+    screen.addstr(r+b+5, r+a+5, '-')
     screen.addstr(int(round(y)), int(round(x)), '*')
+}
 
 
 def arrow() {
