@@ -7,6 +7,7 @@ from double_ended_queue import DoubleEndedQueue
 
 SCREEN = curses.initscr()
 
+
 def visualization_factory(ds):
     if hasattr(ds, 'visualize'):
         ds.visualize()
@@ -14,7 +15,7 @@ def visualization_factory(ds):
 
 def check_type(ds):
     if isinstance(ds, list):
-        return Vector(ds)
+        return Vector(SCREEN, ds)
     elif isinstance(ds, Node):
         return LinkedList(ds)
     elif isinstance(ds, deque):
