@@ -4,10 +4,12 @@ from collections import deque
 
 
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
+    def __init__(self, val=0, left=None, right=None, color=False, label=None):
         self.val = val
         self.left = left
         self.right = right
+        self.color = color
+        self.label = label
 
 
 class BinaryTree:
@@ -15,12 +17,27 @@ class BinaryTree:
         self.screen = screen
         self.root = node
 
-    def draw_circle(self, pos_x, pos_y, val):
+    def dfs_remove_tags(self, node):
+        node.color = False
+        node.label = None
+        if node.left:
+            self.dfs_remove_tags(node.left)
+        if node.right:
+            self.dfs_remove_tags(node.right)
+
+    def draw_circle(self, pos_x, pos_y, val, is_highlighted, label):
         r = 3
         for angle in range(0, 360, 5):
             x = r * 2 * math.sin(math.radians(angle)) + pos_x
             y = r * math.cos(math.radians(angle)) + pos_y
-            self.screen.addstr(int(round(y)), int(round(x)), '*')
+            if is_highlighted:
+                self.screen.addstr(int(round(y)), int(round(x)), '*', curses.color_pair(3))
+            else:
+                self.screen.addstr(int(round(y)), int(round(x)), '*')
+
+        if label:
+            self.screen.addstr(pos_y + 4, pos_x, label)
+
         self.screen.addstr(pos_y, pos_x, str(val))
 
     def draw_arrow(self, pos_x, pos_y, new_x, new_y):
@@ -40,7 +57,7 @@ class BinaryTree:
             pos_y += 1
 
     def dfs_draw(self, node, pos_x, pos_y, depth, prev_x, prev_y):
-        self.draw_circle(pos_x, pos_y, node.val)
+        self.draw_circle(pos_x, pos_y, node.val, node.color, node.label)
         if prev_x > pos_x:
             self.draw_arrow(prev_x - 6, prev_y, pos_x, pos_y - 3)
         elif prev_x < pos_x:

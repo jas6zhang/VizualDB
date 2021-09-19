@@ -17,14 +17,12 @@ def print_trace(co, frame, source):
     SCREEN.addstr(0, 0, "Locals: " + str(frame.f_locals))
 
     curr = 2
-    # curr_line_no = frame.f_lineno
     curr_line_no = co.co_firstlineno
     for line in source:
         if curr_line_no == frame.f_lineno:
             SCREEN.addstr(curr, 0, str(curr_line_no), curses.color_pair(7))
             SCREEN.addstr(curr, 4, line, curses.color_pair(7))
             SCREEN.addstr(curr, 4 + len(line) + 1, "<--", curses.color_pair(7))
-
         else:
             SCREEN.addstr(curr, 0, str(curr_line_no))
             SCREEN.addstr(curr, 4, line)
@@ -38,9 +36,7 @@ def print_trace(co, frame, source):
     ll = []
 
     lll = {}
-
-    keylist = []
-
+    highlight_trees = {}
     for key, val in frame.f_locals.items():
         items = check_type(val, SCREEN)
         if isinstance(items, BinaryTree):
@@ -49,13 +45,14 @@ def print_trace(co, frame, source):
             else:
                 for i in range(len(trees)):
                     if trees[i].validate(items):
+                        highlight_trees[items] = key
                         break
                     if items.validate(trees[i]):
+                        highlight_trees[trees[i]] = key
                         trees[i] = items
                         break
                     if i == len(trees) - 1:
                         trees.append(items)
-
         elif isinstance(items, LinkedList):
             if len(ll) == 0:
                 ll.append(items)
@@ -69,6 +66,7 @@ def print_trace(co, frame, source):
             objects.append(items)
 
     compare_lists(lll, ll)
+    color_trees(highlight_trees, trees)
 
     for l in ll:
         objects.append(l)
@@ -78,6 +76,13 @@ def print_trace(co, frame, source):
     for obj in objects:
         visualization_factory(obj)
 
+def color_trees(tree_map, tree_list):
+    for tree in tree_list:
+        if tree.root:
+            tree.dfs_remove_tags(tree.root)
+    for tree in tree_map.keys():
+        tree.root.color = True
+        tree.root.label = tree_map[tree]
 
 def compare_lists(lll, ll):
     for i in lll.keys():
