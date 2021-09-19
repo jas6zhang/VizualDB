@@ -47,11 +47,11 @@ def trace_lines(frame, event, arg):
 
     if cmd == ord("s"):
         return trace_lines
-    
+
     if cmd == ord("q"):
         curses.endwin()
         return
-    
+
     if cmd == ord("o"):
         return trace_calls
 
@@ -70,6 +70,7 @@ def trace_calls(frame, event, arg):
     #cmd = trace_lines.debugq.get()
     y, x = SCREEN.getmaxyx()
     cmd = SCREEN.getch(y - 1, 0)
+    SCREEN.getch()
 
     if cmd == ord('s'):
         return trace_lines
