@@ -8,9 +8,7 @@ from double_ended_queue import DoubleEndedQueue
 from binary_tree import TreeNode, BinaryTree
 from visualization_factory import check_type, visualization_factory
 
-
 SCREEN = curses.initscr()
-
 
 def print_trace(co, frame, source):
     SCREEN.clear()
@@ -161,5 +159,20 @@ def trace_calls(frame, event, arg):
 
 
 def debug(fn, args):
+    curses.start_color()
+
+    curses.use_default_colors()
+
+    curses.init_pair(1, 200, -1)  # array color ---> Yellow
+    curses.init_pair(2, 230, -1)  # linked list color --> Pink/Red
+    curses.init_pair(3, 47, -1)  # stack / queue color --> Neon Green
+    curses.init_pair(4, 180, -1)  # hashmap color --> Orange
+    curses.init_pair(5, 142, -1)  # heap color ---> Purple
+    curses.init_pair(6, 150, -1)  # binary tree color ---> Blue
+
+    curses.init_pair(7, 14, -1)  # binary tree color ---> Arrow + Line Number
+
+    curses.echo()
+
     sys.settrace(trace_calls)
     fn(*args)

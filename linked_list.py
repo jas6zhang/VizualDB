@@ -57,8 +57,8 @@ class LinkedList:
 
         if hasattr(curr, "label") and curr.label:
             self.screen.addstr(a + 5, b - 2 + 20 * iteration, curr.label)
-            self.screen.addstr(a+8, b - 2 + 20 * iteration, str(curr.val))
+            #self.screen.addstr(a+8, b - 2 + 20 * iteration, str(curr.val))
 
         else:
-            self.screen.addstr(a+8, b - 2 + 20 * iteration, str(curr.val))
+            #self.screen.addstr(a+8, b - 2 + 20 * iteration, str(curr.val))
             self.screen.addstr(a + 5, b - 2 + 20 * iteration, "     ")
