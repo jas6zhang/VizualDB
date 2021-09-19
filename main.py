@@ -63,20 +63,6 @@ def sample3(a, b):  # hashmap
 
 if __name__ == "__main__":
     os.system('color')
-    curses.start_color()
-
-    curses.use_default_colors()
-
-    curses.init_pair(1, 200, -1)  # array color ---> Yellow
-    curses.init_pair(2, 230, -1)  # linked list color --> Pink/Red
-    curses.init_pair(3, 47, -1)  # stack / queue color --> Neon Green
-    curses.init_pair(4, 180, -1)  # hashmap color --> Orange
-    curses.init_pair(5, 142, -1)  # heap color ---> Purple
-    curses.init_pair(6, 150, -1)  # binary tree color ---> Blue
-
-    curses.init_pair(7, 14, -1)  # binary tree color ---> Arrow + Line Number
-
-    curses.echo()
 
     Node1 = Node(1)
 
@@ -106,8 +92,8 @@ if __name__ == "__main__":
     cool.right = TreeNode(3)
     cool.left.left = TreeNode(4)
     cool.left.right = TreeNode(5)
-    debug(bin_tree, (cool, 3))
+    #debug(bin_tree, (cool, 3))
 
     #debug(sample, (2, 5))
-    #debug(sample1, (2, 3))
+    debug(sample1, (2, 3))
     # debug(sample3, (2, 3))
