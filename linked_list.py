@@ -27,7 +27,6 @@ class LinkedList:
         self.screen.refresh()
 
     def display(self, curr, iteration):
-
         y, x = self.screen.getmaxyx()
         a, b = 10, int(x/3)  # y,x
         r = 3

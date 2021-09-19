@@ -71,7 +71,7 @@ class BinaryTree:
     def visualize(self):
         if self.root:
             y, x = self.screen.getmaxyx()
-            self.dfs_draw(self.root, int(x/2), 7, 0, int(x/2), 7)
+            self.dfs_draw(self.root, int(x/1.7), 7, 0, int(x/1.7), 7)
             self.screen.refresh()
 
     def is_subtree(self, s, t):
