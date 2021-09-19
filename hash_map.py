@@ -4,17 +4,17 @@ class HashMap:
         self.screen = screen
 
     def visualize(self):
+        y, x = self.screen.getmaxyx()
         i = 0
-        print(len(self.hash_map))
         for key in self.hash_map:
 
-            box1 = self.screen.subwin(5, 10, 5 + 5*i, 5)
-            self.screen.addstr(7 + 5*i, 8, str(key))
+            box1 = self.screen.subwin(5, 10, 5 + 5*i, int(x/2))
+            self.screen.addstr(7 + 5*i, 4 + int(x/2), str(key))
 
-            self.screen.addstr(7 + 5*i, 16, str("»»=====>"))
+            self.screen.addstr(7 + 5*i, 11 + int(x/2), str("»»=====>"))
 
-            box2 = self.screen.subwin(5, 10, 5 + 5*i, 25)
-            self.screen.addstr(7 + 5*i, 27, str(self.hash_map[key]))
+            box2 = self.screen.subwin(5, 10, 5 + 5*i, int(x/2) + 20)
+            self.screen.addstr(7 + 5*i, 23 + int(x/2), str(self.hash_map[key]))
 
             box1.border(0)
             box1.box()

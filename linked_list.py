@@ -39,4 +39,7 @@ class LinkedList:
             self.screen.addstr(int(round(y)), int(
                 round(x)), '*', curses.color_pair(3))
 
-        self.screen.addstr(a, b + 20 * iteration, str(curr))
+        if curr == node4:
+            ye
+        else:
+            self.screen.addstr(a, b + 20 * iteration, str(curr))

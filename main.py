@@ -107,3 +107,5 @@ if __name__ == "__main__":
     # debug(bin_tree, (cool, 3))
 
     #debug(sample, (2, 5))
+    #debug(sample1, (2, 3))
+    # debug(sample3, (2, 3))
