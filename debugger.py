@@ -1,39 +1,62 @@
 import inspect
 import sys
-from termcolor import cprint
 import curses
 
-from visualization_factory import visualization_factory, check_type, SCREEN
+from vector import Vector
+from linked_list import Node, LinkedList
+from double_ended_queue import DoubleEndedQueue
+from binary_tree import TreeNode, BinaryTree
+from visualization_factory import check_type, visualization_factory
 
-print_blue = lambda x: cprint(x, 'blue')
-print_red = lambda x: cprint(x, 'red')
-print_green = lambda x: cprint(x, 'green')
+SCREEN = curses.initscr()
+
+# print_blue = lambda x: cprint(x, 'blue')
+# print_red = lambda x: cprint(x, 'red')
+# print_green = lambda x: cprint(x, 'green')
 
 def print_trace(co, frame, source):
-    #print("File", co.co_filename)
-    #print("Name", co.co_name)
-    #print("Line#", str(frame.f_lineno))
-    #print("")
-    #print("frame")
-    SCREEN.addstr(0, 0, co.co_name)
-    SCREEN.addstr(1, 0, "Line #: " + str(frame.f_lineno))
-    SCREEN.addstr(2, 0, "Locals: " + str(frame.f_locals))
+    SCREEN.clear()
+    SCREEN.addstr(0, 0, "Locals: " + str(frame.f_locals))
+    curr = 2
+    #curr_line_no = frame.f_lineno
+    curr_line_no = co.co_firstlineno
+    for line in source:
+        SCREEN.addstr(curr, 0, str(curr_line_no))
+        SCREEN.addstr(curr, 4, line)
+        if curr_line_no == frame.f_lineno:
+            SCREEN.addstr(curr, 4 + len(line) + 1, "<--")
+        curr += 1
+        curr_line_no += 1
     SCREEN.refresh()
-    # print_green(co.co_name)
-    # print_red("Line #: " + str(frame.f_lineno))
-    # #print("First Line#", co.co_firstlineno)
-    # print_blue("Locals: " + str(frame.f_locals))
-    #print_green("Source: " + str(source))
-    # for line in source:
-    #     print_green(line)
 
+    trees = []
+    objects = []
     for val in frame.f_locals.values():
-        visualization_factory(check_type(val))
+        items = check_type(val, SCREEN)
+        if isinstance(items, BinaryTree):
+            if len(trees) == 0:
+                trees.append(items)
+            else:
+                for i in range(len(trees)):
+                    if trees[i].validate(items):
+                        break
+                    if items.validate(trees[i]):
+                        trees[i] = items
+                        break
+                    if i == len(trees) - 1:
+                        trees.append(items)
+        else:
+            objects.append(items)
+    for tree in trees:
+        objects.append(tree)
+    for obj in objects:
+        visualization_factory(obj)
 
 
 def trace_lines(frame, event, arg):
     if event != 'line' and event != 'return':
         curses.endwin()
+        exit()
         return
 
     co = frame.f_code
@@ -41,7 +64,6 @@ def trace_lines(frame, event, arg):
 
     print_trace(co, frame, source)
 
-    #cmd = trace_lines.debugq.get()
     y, x = SCREEN.getmaxyx()
     cmd = SCREEN.getch(y - 1, 0)
 
@@ -50,6 +72,7 @@ def trace_lines(frame, event, arg):
     
     if cmd == ord("q"):
         curses.endwin()
+        exit()
         return
     
     if cmd == ord("o"):
@@ -58,6 +81,7 @@ def trace_lines(frame, event, arg):
 def trace_calls(frame, event, arg):
     if event != 'call':
         curses.endwin()
+        exit()
         return
 
     co = frame.f_code
@@ -67,7 +91,6 @@ def trace_calls(frame, event, arg):
 
     print_trace(co, frame, source)
 
-    #cmd = trace_lines.debugq.get()
     y, x = SCREEN.getmaxyx()
     cmd = SCREEN.getch(y - 1, 0)
 
@@ -76,6 +99,7 @@ def trace_calls(frame, event, arg):
 
     if cmd == ord('q'):
         curses.endwin()
+        exit()
         return
 
     if cmd == ord('o'):
@@ -84,9 +108,6 @@ def trace_calls(frame, event, arg):
     return
 
 def debug(fn, args):
-    #trace_lines.debugq = debugq
-    #trace_lines.applicationq = applicationq
-
     sys.settrace(trace_calls)
-
     fn(*args)
+
