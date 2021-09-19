@@ -1,3 +1,5 @@
+import curses
+
 class Vector:
     def __init__(self, screen, arr):
         self.val = arr
