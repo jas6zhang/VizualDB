@@ -9,7 +9,8 @@ class Vector:
         y, x = self.screen.getmaxyx()
         for elem in self.val:
             # start array at half way point
-            box1 = self.screen.subwin(5, 5, 5, int(x/2) + i*5)
+            box1 = self.screen.subwin(5, 5, 5, int(
+                x/2) + i*5, curses.color_pair(1))
             # print the elements in each box
             self.screen.addstr(7, int(x/2) + 1 + i*5, str(elem))
             box1.border(0)

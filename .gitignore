@@ -1,9 +1,9 @@
-__venv__/
+__env__/
 __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
+# C extesions
 *.so
 
 # Distribution / packaging
