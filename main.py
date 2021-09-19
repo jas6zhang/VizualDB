@@ -27,8 +27,8 @@ def sample(a, b):
 def bin_tree(root, n):
     curr = root.right
     for i in range(0, n, 2):
-        curr.right = TreeNode(100 + i)
-        curr.left = TreeNode(99 + i)
+        curr.right = TreeNode(5 + i)
+        curr.left = TreeNode(6 + i)
         curr = curr.right
 
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     Node1.next = Node2
     Node2.next = Node3
 
-    debug(sample2, (Node1, 2))
+    #debug(sample2, (Node1, 2))
 
     # cool = TreeNode(1)
     # cool.left = TreeNode(2)
@@ -101,12 +101,12 @@ if __name__ == "__main__":
 
     # debug(sample3, (1, 2)) --> Hash Map
 
-    # cool = TreeNode(1)
-    # cool.left = TreeNode(2)
-    # cool.right = TreeNode(3)
-    # cool.left.left = TreeNode(4)
-    # cool.left.right = TreeNode(5)
-    # debug(bin_tree, (cool, 3))
+    cool = TreeNode(1)
+    cool.left = TreeNode(2)
+    cool.right = TreeNode(3)
+    cool.left.left = TreeNode(4)
+    cool.left.right = TreeNode(5)
+    debug(bin_tree, (cool, 3))
 
     #debug(sample, (2, 5))
     #debug(sample1, (2, 3))
