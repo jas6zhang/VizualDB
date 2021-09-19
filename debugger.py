@@ -32,7 +32,8 @@ def print_trace(co, frame, source):
     trees = []
     objects = []
     ll = []
-    lll = []
+
+    lll = {}
     highlight_trees = {}
     for key, val in frame.f_locals.items():
         items = check_type(val, SCREEN)
@@ -51,16 +52,18 @@ def print_trace(co, frame, source):
                     if i == len(trees) - 1:
                         trees.append(items)
         elif isinstance(items, LinkedList):
-            lll.append(items)
             if len(ll) == 0:
                 ll.append(items)
+
+            else:
+                lll[val] = key
 
             objects.append(items)
 
         else:
             objects.append(items)
 
-    compare_lists(lll)
+    compare_lists(lll, ll)
     color_trees(highlight_trees, trees)
 
     for l in ll:
@@ -79,18 +82,22 @@ def color_trees(tree_map, tree_list):
         tree.root.color = True
         tree.root.label = tree_map[tree]
 
-def compare_lists(lll):
-    for i in range(1, len(lll)):
-        lll[i].head.color = False
+def compare_lists(lll, ll):
+    for i in lll.keys():
+        i.color = False
+        i.label = None
 
-    if len(lll) > 0:
-        curr = lll[0].head
+    if len(ll) > 0:
+        curr = ll[0].head
 
         while curr:
             curr.color = False
-            for i in range(1, len(lll)):
-                if id(curr) == id(lll[i].head):
-                    lll[i].head.color = True
+            curr.label = None
+
+            for i in lll.keys():
+                if id(curr) == id(i):
+                    i.color = True
+                    i.label = lll[i]
 
             curr = curr.next
 

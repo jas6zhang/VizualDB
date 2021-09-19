@@ -73,8 +73,9 @@ if __name__ == "__main__":
     Node1.next = Node2
     Node2.next = Node3
 
-    #debug(sample2, (Node1, 2))
+    debug(sample2, (Node1, 2))
 
+    # debug(sample1(a, b):
     # cool = TreeNode(1)
     # cool.left = TreeNode(2)
     # cool.right = TreeNode(3)
@@ -87,13 +88,13 @@ if __name__ == "__main__":
 
     # debug(sample3, (1, 2)) --> Hash Map
 
-    cool = TreeNode(1)
-    cool.left = TreeNode(2)
-    cool.right = TreeNode(3)
-    cool.left.left = TreeNode(4)
-    cool.left.right = TreeNode(5)
-    #debug(bin_tree, (cool, 3))
+    # cool = TreeNode(1)
+    # cool.left = TreeNode(2)
+    # cool.right = TreeNode(3)
+    # cool.left.left = TreeNode(4)
+    # cool.left.right = TreeNode(5)
+    # debug(bin_tree, (cool, 3))
 
-    #debug(sample, (2, 5))
-    debug(sample1, (2, 3))
+    # debug(sample, (2, 5))
+    # debug(sample1, (2, 3))
     # debug(sample3, (2, 3))

@@ -36,7 +36,7 @@ class BinaryTree:
                 self.screen.addstr(int(round(y)), int(round(x)), '*')
 
         if label:
-            self.screen.addstr(pos_y + 4, pos_x, label)
+            self.screen.addstr(pos_y + 4, pos_x - 2, label)
 
         self.screen.addstr(pos_y, pos_x, str(val))
 

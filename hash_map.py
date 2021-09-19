@@ -8,12 +8,14 @@ class HashMap:
         i = 0
         for key in self.hash_map:
 
-            box1 = self.screen.subwin(5, 10, 5 + 5*i, int(x/2))
+            box1 = self.screen.subwin(
+                5, 10, 5 + 5*i, int(x/2), curses.color_pair(4))
             self.screen.addstr(7 + 5*i, 4 + int(x/2), str(key))
 
             self.screen.addstr(7 + 5*i, 11 + int(x/2), str("»»=====>"))
 
-            box2 = self.screen.subwin(5, 10, 5 + 5*i, int(x/2) + 20)
+            box2 = self.screen.subwin(
+                5, 10, 5 + 5*i, int(x/2) + 20, curses.color_pair(4))
             self.screen.addstr(7 + 5*i, 23 + int(x/2), str(self.hash_map[key]))
 
             box1.border(0)
