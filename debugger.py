@@ -1,7 +1,7 @@
 import inspect
 import sys
 import curses
-
+import time
 from vector import Vector
 from linked_list import Node, LinkedList
 from double_ended_queue import DoubleEndedQueue
@@ -9,6 +9,20 @@ from binary_tree import TreeNode, BinaryTree
 from visualization_factory import check_type, visualization_factory
 
 SCREEN = curses.initscr()
+global breakpoints
+breakpoints = []
+
+
+def search(x, arr):
+    a = 0
+    for i in arr:
+        if a == 0:
+            a += 1
+            continue
+        if int(x) == int(i):
+            return True
+    return False
+
 
 def print_trace(co, frame, source):
     SCREEN.clear()
@@ -74,6 +88,7 @@ def print_trace(co, frame, source):
     for obj in objects:
         visualization_factory(obj)
 
+
 def color_trees(tree_map, tree_list):
     for tree in tree_list:
         if tree.root:
@@ -81,6 +96,7 @@ def color_trees(tree_map, tree_list):
     for tree in tree_map.keys():
         tree.root.color = True
         tree.root.label = tree_map[tree]
+
 
 def compare_lists(lll, ll):
     for i in lll.keys():
@@ -102,33 +118,72 @@ def compare_lists(lll, ll):
             curr = curr.next
 
 
-def trace_lines(frame, event, arg):
-    if event != 'line' and event != 'return':
-        curses.endwin()
-        exit()
-        return
-
-    co = frame.f_code
-    source = inspect.getsourcelines(co)[0]
-
-    print_trace(co, frame, source)
-
+def setCheckpoints(frame, event, arg):
+    global breakpoints
     y, x = SCREEN.getmaxyx()
-    cmd = SCREEN.getch(y - 1, 0)
+    lines = SCREEN.getstr(y - 1, 2)
+    breakpoints = lines.decode().split(" ")
+    i = 0
+    for line in breakpoints:
+        if i == 0:
+            i += 1
+            continue
+    print(breakpoints)
+    cmd = SCREEN.getch(y - 1, len(lines))
+
+    # print(breakpoints)
+    if cmd == ord('q') or search(frame.f_lineno, breakpoints):
+        SCREEN.addstr(1, 0, "BREAKPOINT FOUND")
+        curses.endwin()
+        # exit()
+        return
 
     if cmd == ord("s"):
         return trace_lines
-
-    if cmd == ord("q"):
-        curses.endwin()
-        exit()
-        return
 
     if cmd == ord("o"):
         return trace_calls
 
 
+def trace_lines(frame, event, arg):
+    global breakpoints
+    # if event != 'line' and event != 'return':
+    #     curses.endwin()
+    #     exit()
+    #     return
+
+    co = frame.f_code
+    source = inspect.getsourcelines(co)[0]
+
+    print_trace(co, frame, source)
+    y, x = SCREEN.getmaxyx()
+    cmd = SCREEN.getch(y - 1, 0)
+    # print(breakpoints)
+    search(frame.f_lineno, breakpoints)
+
+    if search(frame.f_lineno, breakpoints):
+        SCREEN.addstr(1, 0, "BREAKPOINT FOUND")
+        SCREEN.refresh()
+        exit()
+        return
+
+    if cmd == ord('q'):
+        curses.endwin()
+        exit()
+        return
+
+    if cmd == ord("s"):
+        return trace_lines
+
+    if cmd == ord("o"):
+        return trace_calls
+
+    if cmd == ord('b'):
+        return setCheckpoints
+
+
 def trace_calls(frame, event, arg):
+    global breakpoints
     if event != 'call':
         curses.endwin()
         exit()
@@ -144,16 +199,21 @@ def trace_calls(frame, event, arg):
     y, x = SCREEN.getmaxyx()
     cmd = SCREEN.getch(y - 1, 0)
 
-    if cmd == ord('s'):
-        return trace_lines
-
-    if cmd == ord('q'):
+    search(frame.f_lineno, breakpoints)
+    time.sleep(2)
+    if cmd == ord('q') or search(frame.f_lineno, breakpoints):
         curses.endwin()
         exit()
         return
 
+    if cmd == ord('s'):
+        return trace_lines
+
     if cmd == ord('o'):
         return
+
+    if cmd == ord('b'):
+        setCheckpoints(frame, event, arg)
 
     return
 
@@ -174,5 +234,5 @@ def debug(fn, args):
 
     curses.echo()
 
-    sys.settrace(trace_calls)
+    sys.settrace(trace_lines)
     fn(*args)
