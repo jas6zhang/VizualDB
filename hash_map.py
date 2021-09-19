@@ -1,3 +1,5 @@
+import curses 
+
 class HashMap:
     def __init__(self, screen, hash_map):
         self.hash_map = hash_map
@@ -15,7 +17,7 @@ class HashMap:
             self.screen.addstr(7 + 5*i, 11 + int(x/2), str("»»=====>"))
 
             box2 = self.screen.subwin(
-                5, 10, 5 + 5*i, int(x/2) + 20, curses.color_pair(4))
+                5, 10, 5 + 5*i, int(x/2) + 20)
             self.screen.addstr(7 + 5*i, 23 + int(x/2), str(self.hash_map[key]))
 
             box1.border(0)

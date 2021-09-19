@@ -87,7 +87,7 @@ if __name__ == "__main__":
     # debug(sample, (2, 5))
     # debug(sample1, (3, 5))
 
-    # debug(sample3, (1, 2)) --> Hash Map
+    # debug(sample3, (1, 2)) # Hash Map
 
     # cool = TreeNode(1)
     # cool.left = TreeNode(2)

@@ -1,4 +1,3 @@
-import curses
 
 class Vector:
     def __init__(self, screen, arr):
@@ -12,7 +11,7 @@ class Vector:
         for elem in self.val:
             # start array at half way point
             box1 = self.screen.subwin(5, 5, 5, int(
-                x/2) + i*5, curses.color_pair(1))
+                x/2) + i*5)
             # print the elements in each box
             self.screen.addstr(7, int(x/2) + 1 + i*5, str(elem))
             box1.border(0)
