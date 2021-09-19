@@ -1,4 +1,5 @@
 import math
+import curses
 from collections import deque
 
 
@@ -22,21 +23,38 @@ class BinaryTree:
             self.screen.addstr(int(round(y)), int(round(x)), '*')
         self.screen.addstr(pos_y, pos_x, str(val))
 
-    def draw_arrow(self):
-        pass
+    def draw_arrow(self, pos_x, pos_y, new_x, new_y):
+        if pos_x < new_x:
+            while pos_x < new_x:
+                self.screen.addch(pos_y, pos_x, curses.ACS_BSBS)
+                pos_x += 1
+            self.screen.addch(pos_y, pos_x, curses.ACS_BBSS)
+        else:
+            while pos_x > new_x:
+                self.screen.addch(pos_y, pos_x, curses.ACS_BSBS)
+                pos_x -= 1
+            self.screen.addch(pos_y, pos_x, curses.ACS_BSSB)
+        pos_y += 1
+        while pos_y < new_y:
+            self.screen.addch(pos_y, pos_x, curses.ACS_SBSB)
+            pos_y += 1
 
-    def dfs_draw(self, node, pos_x, pos_y, depth):
+    def dfs_draw(self, node, pos_x, pos_y, depth, prev_x, prev_y):
         self.draw_circle(pos_x, pos_y, node.val)
+        if prev_x > pos_x:
+            self.draw_arrow(prev_x - 6, prev_y, pos_x, pos_y - 3)
+        elif prev_x < pos_x:
+            self.draw_arrow(prev_x + 6, prev_y, pos_x, pos_y - 3)
 
         if node.left:
-            self.dfs_draw(node.left, pos_x - 6 * (8 - 2*(depth + 1)), pos_y + 7, depth + 1)
+            self.dfs_draw(node.left, pos_x - 5 * (6 - 2*depth), pos_y + 8, depth + 1, pos_x, pos_y)
         if node.right:
-            self.dfs_draw(node.right, pos_x + 6 * (8 - 2*(depth + 1)), pos_y + 7, depth + 1)
+            self.dfs_draw(node.right, pos_x + 5 * (6 - 2*depth), pos_y + 8, depth + 1, pos_x, pos_y)
 
     def visualize(self):
         if self.root:
             y, x = self.screen.getmaxyx()
-            self.dfs_draw(self.root, int(x/2), 7, 0)
+            self.dfs_draw(self.root, int(x/2), 7, 0, int(x/2), 7)
             self.screen.refresh()
 
     def is_subtree(self, s, t):

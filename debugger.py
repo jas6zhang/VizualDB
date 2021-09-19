@@ -1,19 +1,18 @@
 import inspect
 import sys
-from termcolor import cprint
 import curses
-from collections import deque
 
 from vector import Vector
 from linked_list import Node, LinkedList
 from double_ended_queue import DoubleEndedQueue
 from binary_tree import TreeNode, BinaryTree
+from visualization_factory import check_type, visualization_factory
 
 SCREEN = curses.initscr()
 
-print_blue = lambda x: cprint(x, 'blue')
-print_red = lambda x: cprint(x, 'red')
-print_green = lambda x: cprint(x, 'green')
+# print_blue = lambda x: cprint(x, 'blue')
+# print_red = lambda x: cprint(x, 'red')
+# print_green = lambda x: cprint(x, 'green')
 
 def print_trace(co, frame, source):
     SCREEN.clear()
@@ -33,7 +32,7 @@ def print_trace(co, frame, source):
     trees = []
     objects = []
     for val in frame.f_locals.values():
-        items = check_type(val)
+        items = check_type(val, SCREEN)
         if isinstance(items, BinaryTree):
             if len(trees) == 0:
                 trees.append(items)
@@ -111,19 +110,4 @@ def trace_calls(frame, event, arg):
 def debug(fn, args):
     sys.settrace(trace_calls)
     fn(*args)
-
-def check_type(ds):
-    if isinstance(ds, list):
-        return Vector(ds)
-    elif isinstance(ds, deque):
-        return DoubleEndedQueue(SCREEN, ds)
-    elif hasattr(ds, 'next') and hasattr(ds, 'val'):
-        return LinkedList(ds)
-    elif hasattr(ds, 'left') and hasattr(ds, 'right') and hasattr(ds, 'val'):
-        return BinaryTree(SCREEN, ds)
-    return
-
-def visualization_factory(ds):
-    if hasattr(ds, 'visualize'):
-        ds.visualize()
 

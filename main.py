@@ -12,10 +12,6 @@ class TreeNode:
 
 
 def sample(a, b):
-    # arr = []
-    # for i in range(b):
-    #     arr.append(a)
-    # return arr
     q = deque()
     for i in range(b):
         q.append(a)
