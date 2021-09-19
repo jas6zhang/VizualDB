@@ -9,16 +9,13 @@ from linked_list import Node, LinkedList
 from double_ended_queue import DoubleEndedQueue
 from binary_tree import TreeNode, BinaryTree
 
+
 SCREEN = curses.initscr()
-
-
-def print_blue(x): return cprint(x, 'blue')
-def print_red(x): return cprint(x, 'red')
-def print_green(x): return cprint(x, 'green')
 
 
 def print_trace(co, frame, source):
     SCREEN.clear()
+
     SCREEN.addstr(0, 0, co.co_name)
     SCREEN.addstr(1, 0, "Line #: " + str(frame.f_lineno))
     SCREEN.addstr(2, 0, "Locals: " + str(frame.f_locals))
@@ -26,6 +23,7 @@ def print_trace(co, frame, source):
 
     trees = []
     objects = []
+    ll = []
     for val in frame.f_locals.values():
         items = check_type(val)
         if isinstance(items, BinaryTree):
@@ -40,8 +38,19 @@ def print_trace(co, frame, source):
                         break
                     if i == len(trees) - 1:
                         trees.append(items)
+        elif isinstance(items, LinkedList):
+
+            if len(ll) == 0:
+                ll.append(items)
+
+            print(items.head.val)
+            objects.append(items)
+
         else:
             objects.append(items)
+
+    for l in ll:
+        objects.append(l)
     for tree in trees:
         objects.append(tree)
     for obj in objects:
@@ -115,7 +124,7 @@ def check_type(ds):
     elif isinstance(ds, deque):
         return DoubleEndedQueue(SCREEN, ds)
     elif hasattr(ds, 'next') and hasattr(ds, 'val'):
-        return LinkedList(ds)
+        return LinkedList(SCREEN, ds)
     elif hasattr(ds, 'left') and hasattr(ds, 'right') and hasattr(ds, 'val'):
         return BinaryTree(SCREEN, ds)
     return
