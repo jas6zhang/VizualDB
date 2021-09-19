@@ -26,20 +26,21 @@ class LinkedList:
 
     def linked_list(self, curr, iteration):
 
-        a, b = 10, 10
+        y, x = self.screen.getmaxyx()
+        a, b = 10, int(x/3)  # y,x
         r = 3
 
         if iteration > 0:
-            self.screen.addstr(int(math.floor((r + b)*.5+4)),
-                               int(round(a-r - 9) + 20 * iteration), "-----►", curses.color_pair(3))
+            self.screen.addstr(int(math.floor((r + a)*.5+4)),
+                               int(round(b-r - 9) + 20 * iteration), "-----►", curses.color_pair(3))
 
         for angle in range(0, 360, 5):
-            x = r * 2 * math.sin(math.radians(angle)) + a + 20 * iteration
-            y = r * math.cos(math.radians(angle)) + b
+            x = r * 2 * math.sin(math.radians(angle)) + b + 20 * iteration
+            y = r * math.cos(math.radians(angle)) + a
             self.screen.addstr(int(round(y)), int(
                 round(x)), '*', curses.color_pair(3))
 
-        if curr == node4:
-            ye
-        else:
-            self.screen.addstr(a, b + 20 * iteration, str(curr))
+        # if curr == node4:
+        #     ye
+        # else:
+        self.screen.addstr(a, b + 20 * iteration, str(curr))

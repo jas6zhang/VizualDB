@@ -52,8 +52,6 @@ def print_trace(co, frame, source):
 
             if len(ll) == 0:
                 ll.append(items)
-
-            print(items.head.val)
             objects.append(items)
 
         else:
@@ -126,20 +124,3 @@ def trace_calls(frame, event, arg):
 def debug(fn, args):
     sys.settrace(trace_calls)
     fn(*args)
-
-
-def check_type(ds):
-    if isinstance(ds, list):
-        return Vector(ds)
-    elif isinstance(ds, deque):
-        return DoubleEndedQueue(SCREEN, ds)
-    elif hasattr(ds, 'next') and hasattr(ds, 'val'):
-        return LinkedList(SCREEN, ds)
-    elif hasattr(ds, 'left') and hasattr(ds, 'right') and hasattr(ds, 'val'):
-        return BinaryTree(SCREEN, ds)
-    return
-
-
-def visualization_factory(ds):
-    if hasattr(ds, 'visualize'):
-        ds.visualize()
