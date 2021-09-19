@@ -18,10 +18,6 @@ class Node:
 
 
 def sample(a, b):
-    # arr = []
-    # for i in range(b):
-    #     arr.append(a)
-    # return arr
     q = deque()
     for i in range(b):
         q.append(a)
@@ -58,6 +54,13 @@ def sample2(Node1, next):
         curr = curr.next
 
 
+def sample3(a, b):
+    hash_map = {1: "Bob"}
+    hash_map[3] = "John"
+    hash_map[5] = "Ross"
+    return hash_map
+
+
 if __name__ == "__main__":
     os.system('color')
     curses.start_color()
@@ -90,3 +93,8 @@ if __name__ == "__main__":
     # cool.left.left = TreeNode(4)
     # cool.left.right = TreeNode(5)
     # debug(bin_tree, (cool, 3))
+    # note: only one function can work at at time (i.e. overlap can occur)
+    # debug(sample, (2, 5))
+    # debug(sample1, (3, 5))
+
+    # debug(sample3, (1, 2)) --> Hash Map
