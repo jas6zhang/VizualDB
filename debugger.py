@@ -1,17 +1,17 @@
 import inspect
 import sys
-from termcolor import cprint
 import curses
-from collections import deque
 
 from vector import Vector
 from linked_list import Node, LinkedList
 from double_ended_queue import DoubleEndedQueue
 from binary_tree import TreeNode, BinaryTree
+from visualization_factory import check_type, visualization_factory
 
 
 SCREEN = curses.initscr()
 
+<<<<<<< HEAD
 
 def print_trace(co, frame, source):
     SCREEN.clear()
@@ -19,13 +19,32 @@ def print_trace(co, frame, source):
     SCREEN.addstr(0, 0, co.co_name)
     SCREEN.addstr(1, 0, "Line #: " + str(frame.f_lineno))
     SCREEN.addstr(2, 0, "Locals: " + str(frame.f_locals))
+=======
+# print_blue = lambda x: cprint(x, 'blue')
+# print_red = lambda x: cprint(x, 'red')
+# print_green = lambda x: cprint(x, 'green')
+
+def print_trace(co, frame, source):
+    SCREEN.clear()
+    SCREEN.addstr(0, 0, "Locals: " + str(frame.f_locals))
+    curr = 2
+    #curr_line_no = frame.f_lineno
+    curr_line_no = co.co_firstlineno
+    for line in source:
+        SCREEN.addstr(curr, 0, str(curr_line_no))
+        SCREEN.addstr(curr, 4, line)
+        if curr_line_no == frame.f_lineno:
+            SCREEN.addstr(curr, 4 + len(line) + 1, "<--")
+        curr += 1
+        curr_line_no += 1
+>>>>>>> e2f34e4d22853fd2e34e74c4179fdc64b79dce1b
     SCREEN.refresh()
 
     trees = []
     objects = []
     ll = []
     for val in frame.f_locals.values():
-        items = check_type(val)
+        items = check_type(val, SCREEN)
         if isinstance(items, BinaryTree):
             if len(trees) == 0:
                 trees.append(items)
@@ -117,6 +136,7 @@ def debug(fn, args):
     sys.settrace(trace_calls)
     fn(*args)
 
+<<<<<<< HEAD
 
 def check_type(ds):
     if isinstance(ds, list):
@@ -133,3 +153,5 @@ def check_type(ds):
 def visualization_factory(ds):
     if hasattr(ds, 'visualize'):
         ds.visualize()
+=======
+>>>>>>> e2f34e4d22853fd2e34e74c4179fdc64b79dce1b

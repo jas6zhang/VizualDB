@@ -75,6 +75,7 @@ if __name__ == "__main__":
     curses.init_pair(6, 15, -1)  # binary tree color ---> Blue
 
     curses.echo()
+<<<<<<< HEAD
 
     Node1 = Node(1)
 
@@ -98,3 +99,12 @@ if __name__ == "__main__":
     # debug(sample1, (3, 5))
 
     # debug(sample3, (1, 2)) --> Hash Map
+=======
+    cool = TreeNode(1)
+    cool.left = TreeNode(2)
+    cool.right = TreeNode(3)
+    cool.left.left = TreeNode(4)
+    cool.left.right = TreeNode(5)
+    debug(bin_tree, (cool, 3))
+    #debug(sample, (2, 5))
+>>>>>>> e2f34e4d22853fd2e34e74c4179fdc64b79dce1b
