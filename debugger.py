@@ -11,22 +11,24 @@ from visualization_factory import check_type, visualization_factory
 
 SCREEN = curses.initscr()
 
-# print_blue = lambda x: cprint(x, 'blue')
-# print_red = lambda x: cprint(x, 'red')
-# print_green = lambda x: cprint(x, 'green')
-
 
 def print_trace(co, frame, source):
     SCREEN.clear()
     SCREEN.addstr(0, 0, "Locals: " + str(frame.f_locals))
+
     curr = 2
-    #curr_line_no = frame.f_lineno
+    # curr_line_no = frame.f_lineno
     curr_line_no = co.co_firstlineno
     for line in source:
-        SCREEN.addstr(curr, 0, str(curr_line_no))
-        SCREEN.addstr(curr, 4, line)
         if curr_line_no == frame.f_lineno:
-            SCREEN.addstr(curr, 4 + len(line) + 1, "<--")
+            SCREEN.addstr(curr, 0, str(curr_line_no), curses.color_pair(7))
+            SCREEN.addstr(curr, 4, line, curses.color_pair(7))
+            SCREEN.addstr(curr, 4 + len(line) + 1, "<--", curses.color_pair(7))
+
+        else:
+            SCREEN.addstr(curr, 0, str(curr_line_no))
+            SCREEN.addstr(curr, 4, line)
+
         curr += 1
         curr_line_no += 1
     SCREEN.refresh()
@@ -34,7 +36,9 @@ def print_trace(co, frame, source):
     trees = []
     objects = []
     ll = []
+    lll = []
     for val in frame.f_locals.values():
+
         items = check_type(val, SCREEN)
         if isinstance(items, BinaryTree):
             if len(trees) == 0:
@@ -48,21 +52,42 @@ def print_trace(co, frame, source):
                         break
                     if i == len(trees) - 1:
                         trees.append(items)
-        elif isinstance(items, LinkedList):
 
+        elif isinstance(items, LinkedList):
+            lll.append(items)
             if len(ll) == 0:
                 ll.append(items)
+
             objects.append(items)
 
         else:
             objects.append(items)
 
+    compare_lists(lll)
+
     for l in ll:
         objects.append(l)
     for tree in trees:
         objects.append(tree)
+
     for obj in objects:
         visualization_factory(obj)
+
+
+def compare_lists(lll):
+    for i in range(1, len(lll)):
+        lll[i].head.color = False
+
+    if len(lll) > 0:
+        curr = lll[0].head
+
+        while curr:
+            curr.color = False
+            for i in range(1, len(lll)):
+                if id(curr) == id(lll[i].head):
+                    lll[i].head.color = True
+
+            curr = curr.next
 
 
 def trace_lines(frame, event, arg):

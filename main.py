@@ -72,7 +72,9 @@ if __name__ == "__main__":
     curses.init_pair(3, 47, -1)  # stack / queue color --> Neon Green
     curses.init_pair(4, 180, -1)  # hashmap color --> Orange
     curses.init_pair(5, 142, -1)  # heap color ---> Purple
-    curses.init_pair(6, 15, -1)  # binary tree color ---> Blue
+    curses.init_pair(6, 150, -1)  # binary tree color ---> Blue
+
+    curses.init_pair(7, 14, -1)  # binary tree color ---> Arrow + Line Number
 
     curses.echo()
 

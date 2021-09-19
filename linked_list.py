@@ -3,9 +3,10 @@ import curses
 
 
 class Node:
-    def __init__(self, val, next):
+    def __init__(self, val, next, color=False):
         self.val = val
         self.next = None
+        self.color = color
 
 
 class LinkedList:
@@ -18,13 +19,13 @@ class LinkedList:
         iteration = 0
 
         while curr:
-            self.linked_list(curr.val, iteration)
+            self.display(curr, iteration)
             iteration += 1
             curr = curr.next
 
         self.screen.refresh()
 
-    def linked_list(self, curr, iteration):
+    def display(self, curr, iteration):
 
         y, x = self.screen.getmaxyx()
         a, b = 10, int(x/3)  # y,x
@@ -32,15 +33,29 @@ class LinkedList:
 
         if iteration > 0:
             self.screen.addstr(int(math.floor((r + a)*.5+4)),
-                               int(round(b-r - 9) + 20 * iteration), "-----►", curses.color_pair(3))
-
-        for angle in range(0, 360, 5):
-            x = r * 2 * math.sin(math.radians(angle)) + b + 20 * iteration
-            y = r * math.cos(math.radians(angle)) + a
-            self.screen.addstr(int(round(y)), int(
-                round(x)), '*', curses.color_pair(3))
+                               int(round(b-r - 9) + 20 * iteration), "-----►")
 
         # if curr == node4:
         #     ye
         # else:
-        self.screen.addstr(a, b + 20 * iteration, str(curr))
+
+        if hasattr(curr, "color") and curr.color:
+            for angle in range(0, 360, 5):
+                x = r * 2 * math.sin(math.radians(angle)) + b + 20 * iteration
+                y = r * math.cos(math.radians(angle)) + a
+
+                self.screen.addstr(int(round(y)), int(
+                    round(x)), '*', curses.color_pair(3))
+
+            self.screen.addstr(a, b + 20 * iteration,
+                               str(curr.val))
+
+        else:
+            self.screen.addstr(a, b + 20 * iteration, str(curr.val))
+
+            for angle in range(0, 360, 5):
+                x = r * 2 * math.sin(math.radians(angle)) + b + 20 * iteration
+                y = r * math.cos(math.radians(angle)) + a
+
+                self.screen.addstr(int(round(y)), int(
+                    round(x)), '*')
