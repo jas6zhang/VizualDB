@@ -40,17 +40,3 @@ class LinkedList:
                 round(x)), '*', curses.color_pair(3))
 
         self.screen.addstr(a, b + 20 * iteration, str(curr))
-
-
-if __name__ == "__main__":
-    x = Node(10)
-    llist = LinkedList(x)
-    llist.addNode(20)
-    llist.addNode(30)
-    llist.addNode(40)
-    llist.visualize()
-    print(llist.getHead())
-    print(llist.getTail())
-    llist.removeTail()
-    llist.removeNode(20)
-    llist.visualize()

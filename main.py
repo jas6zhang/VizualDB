@@ -32,7 +32,7 @@ def bin_tree(root, n):
         curr = curr.right
 
 
-def sample1(a, b):
+def sample1(a, b):  # array
     arr = []
     i = 0
     for i in range(b):
@@ -41,7 +41,7 @@ def sample1(a, b):
     return arr
 
 
-def sample2(Node1, next):
+def sample2(Node1, next):  # linked list
     curr = Node1
 
     while curr.next:
@@ -54,7 +54,7 @@ def sample2(Node1, next):
         curr = curr.next
 
 
-def sample3(a, b):
+def sample3(a, b):  # hashmap
     hash_map = {1: "Bob"}
     hash_map[3] = "John"
     hash_map[5] = "Ross"
@@ -75,7 +75,6 @@ if __name__ == "__main__":
     curses.init_pair(6, 15, -1)  # binary tree color ---> Blue
 
     curses.echo()
-<<<<<<< HEAD
 
     Node1 = Node(1)
 
@@ -99,12 +98,12 @@ if __name__ == "__main__":
     # debug(sample1, (3, 5))
 
     # debug(sample3, (1, 2)) --> Hash Map
-=======
-    cool = TreeNode(1)
-    cool.left = TreeNode(2)
-    cool.right = TreeNode(3)
-    cool.left.left = TreeNode(4)
-    cool.left.right = TreeNode(5)
-    debug(bin_tree, (cool, 3))
+
+    # cool = TreeNode(1)
+    # cool.left = TreeNode(2)
+    # cool.right = TreeNode(3)
+    # cool.left.left = TreeNode(4)
+    # cool.left.right = TreeNode(5)
+    # debug(bin_tree, (cool, 3))
+
     #debug(sample, (2, 5))
->>>>>>> e2f34e4d22853fd2e34e74c4179fdc64b79dce1b
