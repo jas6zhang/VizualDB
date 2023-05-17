@@ -1,6 +1,5 @@
 # HackTheNorth2021
-
-### Check out the Devpost @https://devpost.com/software/vizualdb!
+Check out the Devpost at https://devpost.com/software/vizualdb!
 
 ## Inspiration 💭 : 
 Our initial inspiration came from our traumatic past experiences with Leetcode and other online coding assessments. In particular, data structures proved far too overwhelming time and time again. We’ve spent long hours attempting to complete these questions. We learn best through visual representation, and we believe this is the case for many of our fellow programmers. As a result, we decided to create a data structure visualizing debugger, a tool that will help users in their own journey of mastering data structures.
