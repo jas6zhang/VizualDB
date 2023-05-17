@@ -1,4 +1,4 @@
-# HackTheNorth2021
+# VizualDB
 Check out the Devpost at https://devpost.com/software/vizualdb!
 
 ## Inspiration 💭 : 
